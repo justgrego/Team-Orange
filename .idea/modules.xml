@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/JD-Version-1.0/JD-Version-1.0.iml" filepath="$PROJECT_DIR$/JD-Version-1.0/JD-Version-1.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Team-Orange.iml" filepath="$PROJECT_DIR$/.idea/Team-Orange.iml" />
+    </modules>
+  </component>
+</project>
