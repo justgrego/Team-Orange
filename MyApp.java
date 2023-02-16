@@ -9,56 +9,40 @@ import java.io.IOException;
  * @Version Michael Tuskan
  */
 public class MyApp extends JFrame {
-    private final AboutScreen aboutScreen;
-    private final ProfileScreen profileScreen;
-    private final JPanel centerPanel;
-
+    GUI gui;
     // Constructor
     public MyApp() throws IOException {
-        aboutScreen = new AboutScreen();
-        profileScreen = new ProfileScreen();
-        centerPanel = new JPanel();
-
+        gui = new GUI();
     }
 
     public void runApplication() throws IOException {
         // Main Homepage JFrame settings
-        getContentPane().setBackground(Color.ORANGE);
+        setContentPane(gui.getMainPanel());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
         setLocation(600, 600);
         setSize(500, 500);
         setTitle("Iteration 1");
 
-        // Call Panel Methods onto HomePage (main JFrame)
-        centerPanelMethod();
 
         // About Button Action Listener
-        aboutScreen.getAboutButton().addActionListener(new aboutButtonListener());
-        profileScreen.getProfileButton().addActionListener(new profileButtonListener());
+        gui.getStartAboutButton().addActionListener(new aboutButtonListener());
+        gui.getStartProfileButton().addActionListener(new profileButtonListener());
     }
 
-    public void centerPanelMethod() throws IOException {
-        centerPanel.setLayout(new BorderLayout());
-        centerPanel.setBackground(new Color(255, 176, 129));
-        centerPanel.add(aboutScreen.aboutScreenButtonAndJPanel(), BorderLayout.CENTER);
-        centerPanel.add(profileScreen.profileScreenButtonAndJPanel(), BorderLayout.NORTH);
-        add(centerPanel, BorderLayout.CENTER);
-    }
 
 
     class aboutButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            aboutScreen.openAboutScreen();
-
+            //aboutScreen.openAboutScreen();
         }
     }
 
     class profileButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            profileScreen.openProfileScreen();
+            //profileScreen.openProfileScreen();
 
         }
     }
