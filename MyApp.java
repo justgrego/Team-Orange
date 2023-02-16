@@ -28,22 +28,33 @@ public class MyApp extends JFrame {
         // About Button Action Listener
         gui.getStartAboutButton().addActionListener(new aboutButtonListener());
         gui.getStartProfileButton().addActionListener(new profileButtonListener());
+        gui.getAboutProfileButton().addActionListener(new aboutProfileButtonListener());
     }
 
-
-
-    class aboutButtonListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            //aboutScreen.openAboutScreen();
-        }
-    }
 
     class profileButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            //profileScreen.openProfileScreen();
+            gui.getStartPanel().setVisible(false);
+            gui.getProfilePanel().setVisible(true);
+        }
+    }
 
+    class aboutButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            gui.getStartPanel().setVisible(false);
+            gui.getAboutPanel().setVisible(true);
+        }
+    }
+
+    class aboutProfileButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            About about = new About();
+            gui.getAboutPanel().setVisible(false);
+            gui.getAboutTextPane().setText(about.displayString());
+            gui.getProfilePanel().setVisible(true);
         }
     }
 }
