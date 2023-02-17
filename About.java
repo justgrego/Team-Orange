@@ -11,7 +11,7 @@ public class About {
     public About() {
         names = new String[]{"JD Sawyer", "Michael Tuksan", "Ian Liston", "Matthew Kim", "Gregory Yi"};
         comment =", I can be reached at: ";
-        emails = new String[]{"jds1223@uw.edu", "", "", "", ""};
+        emails = new String[]{"jds1223@uw.edu", "", "IanList@uw.edu", "", ""};
         version = "1.0";
     }
 
