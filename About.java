@@ -17,7 +17,7 @@ public class About {
 
     public String displayUser(User user){
         String ret  = "This app is registered to: ";
-        ret += user.getUsername();
+        ret += user;
         return ret;
     }
 
@@ -36,6 +36,4 @@ public class About {
         }
         return ret;
     }
-
-
 }
