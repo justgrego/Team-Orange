@@ -14,13 +14,13 @@ public class AuthenticateUser extends JDialog {
         gui.getLoginButton().addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String email = gui.getProfileNameTextField().getText();
+                String name = gui.getProfileNameTextField().getText();
                 String password = String.valueOf(gui.getPasswordPasswordField().getPassword());
-                user = getAuthenticatedUser(email, password);
+                user = getAuthenticatedUser(name, password);
                 if (user != null)
                     gui.getProfileAlertTextPane().setText("Successfully logged in");
                 else
-                    gui.getProfileAlertTextPane().setText("Email or Password Invalid");
+                    gui.getProfileAlertTextPane().setText("Name or Password Invalid");
             }
         });
         boolean hasRegistredUsers = connectToDatabase();
@@ -77,7 +77,7 @@ public class AuthenticateUser extends JDialog {
     /**
      * Author Gregory Yi
      */
-    public User getAuthenticatedUser(String email, String password) {
+    public User getAuthenticatedUser(String name, String password) {
         User user = null;
 
         final String DB_URL = "jdbc:mysql://teamorange.mysql.database.azure.com /login?serverTimezone=UTC";
@@ -88,9 +88,9 @@ public class AuthenticateUser extends JDialog {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             // Connected to database successfully...
             Statement stmt = conn.createStatement();
-            String sql = "SELECT * FROM users WHERE email=? AND password=?";
+            String sql = "SELECT * FROM users WHERE name=? AND password=?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, email);
+            preparedStatement.setString(1, name);
             preparedStatement.setString(2, password);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

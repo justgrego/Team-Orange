@@ -12,11 +12,13 @@ public class MyApp extends JFrame {
     private GUI gui;
     private About about;
     private User user;
+    private Dashboard dashboard;
 
     // Constructor
     public MyApp() {
-        gui = new GUI();
+        gui = new GUI(null);
         about = new About();
+        dashboard = new Dashboard(null);
     }
 
     /**
@@ -30,7 +32,7 @@ public class MyApp extends JFrame {
         setVisible(true);
         setLocation(500, 200);
         setSize(600, 600);
-        setTitle("Iteration 1");
+        setTitle("Homepage");
 
         // About Button Action Listener
         gui.getStartAboutButton().addActionListener(new aboutButtonListener());
@@ -39,8 +41,9 @@ public class MyApp extends JFrame {
         gui.getProfileCheckBox().addActionListener(new profileCheckBoxListener());
         gui.getLoginButton().addActionListener(new loginRegLoginButtonListener());
         gui.getRegisterButton().addActionListener(new loginRegRegisterButtonListener());
-       // gui.getPasswordPasswordField().addActionListener(new profilePasswordEnter());
+        gui.getPasswordPasswordField().addActionListener(new profilePasswordEnter());
         gui.getProfileLoginButton().addActionListener(new profileLoginButtonListener());
+        dashboard.getHomepageButton().addActionListener(new homepageButtonListener());
     }
 
     /**
@@ -50,13 +53,16 @@ public class MyApp extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             AuthenticateUser aUser = new AuthenticateUser(gui);
-            String email = gui.getProfileNameTextField().getText();
+            String name = gui.getProfileNameTextField().getText();
             String password = String.valueOf(gui.getPasswordPasswordField().getPassword());
-            user = aUser.getAuthenticatedUser(email, password);
+            user = aUser.getAuthenticatedUser(name, password);
             if (user != null) {
                 gui.getProfileAlertTextPane().setText("Login Successful");
                 gui.getProfileAlertTextPane().setVisible(true);
-                user.export();
+                setVisible(false);
+                dashboard.getExportName().setVisible(false);
+                dashboard.setCurrUser(user);
+                dashboard.setVisible(true);
             }
             else {
                 gui.getProfileAlertTextPane().setText("Invalid");
@@ -112,23 +118,23 @@ public class MyApp extends JFrame {
     /**
      * Author Ian Liston
      */
-//    class profilePasswordEnter implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            AuthenticateUser aUser = new AuthenticateUser(gui);
-//            String email = gui.getProfileNameTextField().getText();
-//            String password = String.valueOf(gui.getPasswordPasswordField().getPassword());
-//            user = aUser.getAuthenticatedUser(email, password);
-//            if (user != null) {
-//                gui.getProfileAlertTextPane().setText("Login Successful");
-//                gui.getProfileAlertTextPane().setVisible(true);
-//            }
-//            else {
-//                gui.getProfileAlertTextPane().setText("Invalid");
-//                gui.getProfileAlertTextPane().setVisible(true);
-//            }
-//        }
-//    }
+    class profilePasswordEnter implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            AuthenticateUser aUser = new AuthenticateUser(gui);
+            String email = gui.getProfileNameTextField().getText();
+            String password = String.valueOf(gui.getPasswordPasswordField().getPassword());
+            user = aUser.getAuthenticatedUser(email, password);
+            if (user != null) {
+                gui.getProfileAlertTextPane().setText("Login Successful");
+                gui.getProfileAlertTextPane().setVisible(true);
+            }
+            else {
+                gui.getProfileAlertTextPane().setText("Invalid");
+                gui.getProfileAlertTextPane().setVisible(true);
+            }
+        }
+    }
 
     /**
      * Author Michael Tuskan and Ian Liston
@@ -163,4 +169,26 @@ public class MyApp extends JFrame {
             gui.getLoginRegisterPanel().setVisible(true);
         }
     }
+
+    /**
+     * Author Michael Tuskan
+     */
+
+    class homepageButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setVisible(true);
+            dashboard.setVisible(false);
+            gui.getProfileAlertTextPane().setVisible(false);
+        }
+    }
+
+    class exportButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dashboard.getExportName().setVisible(true);
+        }
+    }
+
+
 }

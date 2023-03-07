@@ -1,10 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
+import java.util.Arrays;
+import java.util.Scanner;
+
 /**
  * User Class
  * @Author Gregory Yi, JD
@@ -56,42 +57,18 @@ public class User {
     public String phone;
     public String address;
     public String password;
+
     /**
      * Author Gregory Yi, JD
      */
-    public void export() {
-        Connection con = null;
-        PreparedStatement p = null;
-        ResultSet rs = null;
-        final String DB_URL = "jdbc:mysql://teamorange.mysql.database.azure.com /login?serverTimezone=UTC";
-        final String USERNAME = "orange";
-        final String PASSWORD = "!Team360";
-        String name = "";
-        String email = "";
-        String phone = "";
-        String address = "";
+    public boolean export(String theFile, User user) {
+        String name = user.getName();
+        String email = user.getEmail();
+        String phone = user.getPhone();
+        String address = user.getAddress();
+        String password = user.getPassword();
         try {
-            String sql = "SELECT * FROM users WHERE name = '" + this.getName() + "'";
-            con = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            PreparedStatement ps = con.prepareStatement(sql);
-            rs = ps.executeQuery();
-
-            while (rs.next()) {
-
-                name = rs.getString("name");
-                email = rs.getString("email");
-                phone = rs.getString("phone");
-                address = rs.getString("address");
-                System.out.println( name
-                        + "\t\t" + email + "\t\t" + phone + "\t\t" + address);
-            }
-
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-        try {
-            File myObj = new File("filename.txt");
+            File myObj = new File(theFile);
             if (myObj.createNewFile()) {
                 System.out.println("File created: " + myObj.getName());
             } else {
@@ -102,23 +79,64 @@ public class User {
             e.printStackTrace();
         }
         try {
-            FileWriter myWriter = new FileWriter("filename.txt");
+            FileWriter myWriter = new FileWriter(theFile);
             String tname = "Name: " + name;
             String temail = "Email: " + email;
-            String taddress = "Name: " + address;
-            String tphone = "Email: " + phone;
-
+            String taddress = "Address: " + address;
+            String tphone = "Phone: " + phone;
+            String tpassword = "Password: " + password;
             myWriter.write(tname + "\n");
             myWriter.write(temail + "\n");
             myWriter.write(taddress + "\n");
             myWriter.write(tphone + "\n");
+            myWriter.write(tpassword + "\n");
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();
+            return false;
         }
+        return true;
     }
 
+
+    public boolean importData(String filePath, User user){
+        File file = new File(filePath);
+        String[][] storage = new String[10][10];
+        String[] line;
+        int index = 0;
+        try {
+            Scanner sc = new Scanner(file);
+            while(sc.hasNextLine()) {
+                 line = sc.nextLine().split(":");
+                 storage[index] = line;
+                 index++;
+                 System.out.print(Arrays.toString(line));
+            }
+            final String DB_URL = "jdbc:mysql://teamorange.mysql.database.azure.com /login?serverTimezone=UTC";
+            final String USERNAME = "orange";
+            final String PASSWORD = "!Team360";
+
+            String sql = "UPDATE users SET name = '" + storage[0][1].trim() + "', email = '" + storage[1][1].trim() + "', address = '"
+                    + storage[2][1].trim() + "', phone ='" + storage[3][1].trim() + "', password = '" + storage[4][1].trim()
+                    + "' WHERE name = '" + this.getName() + "'";
+            try {
+                Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+                // Connected to database successfully...
+                PreparedStatement preparedStatement = conn.prepareStatement(sql);
+                preparedStatement.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            } catch (Exception e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+
+        }
+
+
+        return true;
+    }
 
 }

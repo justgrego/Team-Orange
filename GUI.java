@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 
 /**
@@ -7,7 +8,7 @@ import javax.swing.*;
  Date  : 02/16/2023
 **/
 
-public class GUI {
+public class GUI extends JDialog {
     private JPanel mainPanel;
     private JButton startProfileButton;
     private JButton startAboutButton;
@@ -39,6 +40,7 @@ public class GUI {
     private JTextPane profileAlertTextPane;
     private JCheckBox ProfileCheckBox;
     private JButton profileLoginButton;
+
 
 
 
@@ -79,4 +81,15 @@ public class GUI {
     public JPanel getAboutPanel() {return aboutPanel;}
     public JTextPane getAboutTextPane() {return aboutTextPane;}
     public JButton getAboutProfileButton() {return aboutProfileButton;}
+
+    public GUI(JFrame parent) {
+        super(parent);
+        setTitle("Homepage");
+        setContentPane(mainPanel);
+        //setMinimumSize(new Dimension(1150, 900));
+        //setModal(true);
+        //setLocationRelativeTo(parent);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
 }
