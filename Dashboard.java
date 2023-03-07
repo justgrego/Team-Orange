@@ -28,7 +28,7 @@ public class Dashboard extends JDialog{
     private JTextField exportFile;
     private JPanel exportName;
     private JButton FINISHButton;
-    private User currUser;
+    private static User currUser;
 
     /**
      * Michael Tukson, Gregory Yi
@@ -105,8 +105,8 @@ public class Dashboard extends JDialog{
         });
     }
 
-    public void setCurrUser(User currUser) {
-        this.currUser = currUser;
+    public static void setCurrUser(User theUser) {
+        currUser = theUser;
     }
 
     public User getCurrUser() {

@@ -121,6 +121,12 @@ public class User {
             String sql = "UPDATE users SET name = '" + storage[0][1].trim() + "', email = '" + storage[1][1].trim() + "', address = '"
                     + storage[2][1].trim() + "', phone ='" + storage[3][1].trim() + "', password = '" + storage[4][1].trim()
                     + "' WHERE name = '" + this.getName() + "'";
+            this.setName(storage[0][1].trim());
+            this.setEmail(storage[1][1].trim());
+            this.setAddress(storage[2][1].trim());
+            this.setPassword(storage[4][1].trim());
+            this.setPhone(storage[3][1].trim());
+            Dashboard.setCurrUser(this);
             try {
                 Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
                 // Connected to database successfully...
