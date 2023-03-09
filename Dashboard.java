@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,21 +14,55 @@ public class Dashboard extends JDialog{
     private JPanel mainDashboardPanel;
     private JPanel dashboardPanel;
     private JPanel menuPanel;
-    private JLabel menuLabel;
     private JLabel menuLogoLabel;
     private JButton projectsButton;
     private JButton exportButton;
     private JButton importButton;
     private JButton homePageButton;
     private JPanel resourcesPanel;
-    private JLabel resourcesLabel;
 
     private JPanel toDoPanel;
-    private JLabel toDoLabel;
-    private JTextField textField1;
     private JTextField exportFile;
     private JPanel exportName;
     private JButton FINISHButton;
+    private JPanel panel1;
+    private JPanel dropPanel;
+    private JTextPane toDoListTextPane;
+    private JButton task1Button;
+    private JTextArea task1TextPane;
+    private JPanel taskOne;
+    private JPanel taskTwo;
+    private JPanel taskThree;
+    private JPanel taskFour;
+    private JPanel taskFive;
+    private JPanel taskSix;
+    private JPanel taskSeven;
+    private JPanel taskEight;
+    private JPanel taskNine;
+    private JPanel taskTen;
+    private JPanel taskEleven;
+    private JButton task2Button;
+    private JTextArea task2TextPane;
+    private JButton task3Button;
+    private JTextArea task3TextPane;
+    private JButton task4Button;
+    private JTextArea task4TextPane;
+    private JButton task5Button;
+    private JTextArea task5TextPane;
+    private JButton task6Button;
+    private JTextArea task6TextPane;
+    private JButton task7Button;
+    private JTextArea task7TextPane;
+    private JButton task8Button;
+    private JTextArea task8TextPane;
+    private JButton task9Button;
+    private JTextArea task9TextPane;
+    private JButton task10Button;
+    private JTextArea task10TextPane;
+    private JButton task11Button;
+    private JTextArea task11TextPane;
+    private JButton resourcePlusButton;
+    private JButton toDoListPlusButton;
     private User currUser;
 
     /**
@@ -38,7 +73,7 @@ public class Dashboard extends JDialog{
         super(parent);
         setTitle("Dashboard");
         setContentPane(mainDashboardPanel);
-        setMinimumSize(new Dimension(1150, 900));
+        setMinimumSize(new Dimension(1150, 800));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -103,7 +138,27 @@ public class Dashboard extends JDialog{
 
             }
         });
+
+        toDoListPlusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+
+        taskOne.setBorder(new RoundedBorder(10));
+        taskTwo.setBorder(new RoundedBorder(10));
+        taskThree.setBorder(new RoundedBorder(10));
+        taskFour.setBorder(new RoundedBorder(10));
+        taskFive.setBorder(new RoundedBorder(10));
+        taskSix.setBorder(new RoundedBorder(10));
+        taskSeven.setBorder(new RoundedBorder(10));
+        taskEight.setBorder(new RoundedBorder(10));
+        taskNine.setBorder(new RoundedBorder(10));
+        taskTen.setBorder(new RoundedBorder(10));
+        taskEleven.setBorder(new RoundedBorder(10));
     }
+
 
     public void setCurrUser(User currUser) {
         this.currUser = currUser;
@@ -119,5 +174,35 @@ public class Dashboard extends JDialog{
 
     public JPanel getExportName() {
         return exportName;
+    }
+
+    public void createTask(){
+    }
+
+    private void addTask(){
+
+    }
+
+    private static class RoundedBorder implements Border {
+
+        private int radius;
+
+        RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius+1, this.radius+1, this.radius+2, this.radius);
+        }
+
+        @Override
+        public boolean isBorderOpaque() {
+            return true;
+        }
+
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.drawRoundRect(x,y,width-1,height-1,radius,radius);
+        }
     }
 }
