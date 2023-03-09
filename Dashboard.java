@@ -67,6 +67,7 @@ public class Dashboard extends JDialog{
     private JTextArea task11TextPane;
     private Queue<JTextArea> taskTextQue;
     private Queue<JPanel> taskPanelQue;
+    private Queue<JButton> taskButtonQue;
 
     private JButton resourcePlusButton;
     private JButton toDoListPlusButton;
@@ -78,7 +79,6 @@ public class Dashboard extends JDialog{
 
     private Project project;
 
-
     /**
      * Michael Tukson, Gregory Yi
      * @param parent
@@ -89,6 +89,7 @@ public class Dashboard extends JDialog{
         project = new Project();
         taskTextQue = new LinkedList<>();
         taskPanelQue = new LinkedList<>();
+        taskButtonQue = new LinkedList<>();
         createTaskQueues();
 
         setTitle("Dashboard");
@@ -191,12 +192,13 @@ public class Dashboard extends JDialog{
         /**
          * Author Ian Liston
          */
-        // New task popup window.
+        // New task popup window plus button. This Window adds a new task to the to-dolist.
         taskWinPlusButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(!taskPanelQue.isEmpty()) {
-                    Task task = new Task(toDoLWinTextField.getText(), toDoLWinDateField.getText(), taskPanelQue.remove(), taskTextQue.remove());
+                    Task task = new Task(toDoLWinTextField.getText(), toDoLWinDateField.getText(), taskPanelQue.remove(),
+                            taskButtonQue.remove(), taskTextQue.remove(), project);
                     project.addTask(task);
                 }
                 project.rePopulateTasks();
@@ -273,5 +275,17 @@ public class Dashboard extends JDialog{
         this.taskPanelQue.add(task9);
         this.taskPanelQue.add(task10);
         this.taskPanelQue.add(task11);
+
+        this.taskButtonQue.add(task1Button);
+        this.taskButtonQue.add(task2Button);
+        this.taskButtonQue.add(task3Button);
+        this.taskButtonQue.add(task4Button);
+        this.taskButtonQue.add(task5Button);
+        this.taskButtonQue.add(task6Button);
+        this.taskButtonQue.add(task7Button);
+        this.taskButtonQue.add(task8Button);
+        this.taskButtonQue.add(task9Button);
+        this.taskButtonQue.add(task10Button);
+        this.taskButtonQue.add(task11Button);
     }
 }

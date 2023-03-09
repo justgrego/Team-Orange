@@ -34,7 +34,13 @@ public class Project {
     }
 
     public void deleteTask(String taskText){
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        for(int n = 0; n < toDoList.size();n++){
+            if(toDoList.get(n).getTask().equals(taskText)){
+                toDoList.remove(n);
+                break;
+            }
+        }
+        rePopulateTasks();
     }
 
     public void addTask(Task task){
@@ -50,6 +56,9 @@ public class Project {
         }
     }
 
+    /**
+     * Author Ian Liston
+     */
     public void rePopulateTasks(){
         if(!toDoList.isEmpty())
             for(int n = 0; n < toDoList.size(); n++){

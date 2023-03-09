@@ -1,18 +1,29 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Task implements Comparable<Task> {
     private String task;
     private String date;
     private JPanel panel;
-    private JButton button;
+    private JButton deleteButton;
     private JTextArea textArea;
 
-    public Task(String task, String date, JPanel panel, JTextArea textArea) {
+    public Task(String task, String date, JPanel panel, JButton button, JTextArea textArea, Project project) {
         this.task = task;
         //format MM/DD/YYYY
         this.date = date;
         this.panel = panel;
         this.textArea = textArea;
+        this.deleteButton = button;
+
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                panel.setVisible(false);
+                project.deleteTask(task);
+            }
+        });
     }
 
     public JPanel getPanel() {
