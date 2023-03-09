@@ -14,22 +14,22 @@ public class Dashboard extends JDialog{
     private JPanel mainDashboardPanel;
     private JPanel dashboardPanel;
     private JPanel menuPanel;
-    private JLabel menuLogoLabel;
     private JButton projectsButton;
     private JButton exportButton;
     private JButton importButton;
     private JButton homePageButton;
     private JPanel resourcesPanel;
 
-    private JPanel toDoPanel;
     private JTextField exportFile;
     private JPanel exportName;
     private JButton FINISHButton;
-    private JPanel panel1;
-    private JPanel dropPanel;
+    private User currUser;
+
+    /**
+     * Author Ian Liston
+     */
+    private JPanel toDoPanel;
     private JTextPane toDoListTextPane;
-    private JButton task1Button;
-    private JTextArea task1TextPane;
     private JPanel taskOne;
     private JPanel taskTwo;
     private JPanel taskThree;
@@ -41,6 +41,8 @@ public class Dashboard extends JDialog{
     private JPanel taskNine;
     private JPanel taskTen;
     private JPanel taskEleven;
+    private JButton task1Button;
+    private JTextArea task1TextPane;
     private JButton task2Button;
     private JTextArea task2TextPane;
     private JButton task3Button;
@@ -63,7 +65,14 @@ public class Dashboard extends JDialog{
     private JTextArea task11TextPane;
     private JButton resourcePlusButton;
     private JButton toDoListPlusButton;
-    private User currUser;
+    private JButton taskWinPlusButton;
+    private JTextField toDoLWinTextField;
+    private JTextField toDoLWinDateField;
+    private JPanel taskWinPanel;
+    private JPanel taskDropPanel;
+
+    private Project project;
+
 
     /**
      * Michael Tukson, Gregory Yi
@@ -77,6 +86,7 @@ public class Dashboard extends JDialog{
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        project = new Project();
         exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -109,11 +119,8 @@ public class Dashboard extends JDialog{
                             "Failed",
                             JOptionPane.ERROR_MESSAGE);
                 }
-
-
             }
         });
-
 
         FINISHButton.addActionListener(new ActionListener() {
             @Override
@@ -139,13 +146,10 @@ public class Dashboard extends JDialog{
             }
         });
 
-        toDoListPlusButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
+        /**
+         * Author Ian Liston
+         */
+        // Creates round boarder of task bars {
         taskOne.setBorder(new RoundedBorder(10));
         taskTwo.setBorder(new RoundedBorder(10));
         taskThree.setBorder(new RoundedBorder(10));
@@ -157,8 +161,35 @@ public class Dashboard extends JDialog{
         taskNine.setBorder(new RoundedBorder(10));
         taskTen.setBorder(new RoundedBorder(10));
         taskEleven.setBorder(new RoundedBorder(10));
-    }
+        // }
 
+        /**
+         * Author Ian Liston
+         */
+        // The To-Do-List plus button action listener opens the new task bar window
+        toDoListPlusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                taskDropPanel.setVisible(false);
+                taskWinPanel.setVisible(true);
+            }
+        });
+
+        /**
+         * Author Ian Liston
+         */
+        // New task popup window.
+        taskWinPlusButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Task task = new Task(toDoLWinTextField.getText(),toDoLWinDateField.getText());
+                project.addTask(task);
+                taskWinPanel.setVisible(false);
+                taskDropPanel.setVisible(true);
+                // Re-populate task bars here!!!!
+            }
+        });
+    }
 
     public void setCurrUser(User currUser) {
         this.currUser = currUser;
@@ -176,13 +207,9 @@ public class Dashboard extends JDialog{
         return exportName;
     }
 
-    public void createTask(){
-    }
-
-    private void addTask(){
-
-    }
-
+    /**
+     * Author Ian Liston
+     */
     private static class RoundedBorder implements Border {
 
         private int radius;
