@@ -1,12 +1,26 @@
+import javax.swing.*;
 
 public class Task implements Comparable<Task> {
     private String task;
     private String date;
+    private JPanel panel;
+    private JButton button;
+    private JTextArea textArea;
 
-    public Task(String task, String date) {
+    public Task(String task, String date, JPanel panel, JTextArea textArea) {
         this.task = task;
         //format MM/DD/YYYY
         this.date = date;
+        this.panel = panel;
+        this.textArea = textArea;
+    }
+
+    public JPanel getPanel() {
+        return panel;
+    }
+
+    public JTextArea getTextArea() {
+        return textArea;
     }
 
     public String getTask() {

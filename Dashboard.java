@@ -4,6 +4,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author Michael Tuskan
@@ -30,17 +32,17 @@ public class Dashboard extends JDialog{
      */
     private JPanel toDoPanel;
     private JTextPane toDoListTextPane;
-    private JPanel taskOne;
-    private JPanel taskTwo;
-    private JPanel taskThree;
-    private JPanel taskFour;
-    private JPanel taskFive;
-    private JPanel taskSix;
-    private JPanel taskSeven;
-    private JPanel taskEight;
-    private JPanel taskNine;
-    private JPanel taskTen;
-    private JPanel taskEleven;
+    private JPanel task1;
+    private JPanel task2;
+    private JPanel task3;
+    private JPanel task4;
+    private JPanel task5;
+    private JPanel task6;
+    private JPanel task7;
+    private JPanel task8;
+    private JPanel task9;
+    private JPanel task10;
+    private JPanel task11;
     private JButton task1Button;
     private JTextArea task1TextPane;
     private JButton task2Button;
@@ -63,6 +65,9 @@ public class Dashboard extends JDialog{
     private JTextArea task10TextPane;
     private JButton task11Button;
     private JTextArea task11TextPane;
+    private Queue<JTextArea> taskTextQue;
+    private Queue<JPanel> taskPanelQue;
+
     private JButton resourcePlusButton;
     private JButton toDoListPlusButton;
     private JButton taskWinPlusButton;
@@ -80,13 +85,19 @@ public class Dashboard extends JDialog{
      */
     public Dashboard(JFrame parent) {
         super(parent);
+
+        project = new Project();
+        taskTextQue = new LinkedList<>();
+        taskPanelQue = new LinkedList<>();
+        createTaskQueues();
+
         setTitle("Dashboard");
         setContentPane(mainDashboardPanel);
         setMinimumSize(new Dimension(1150, 800));
         setModal(true);
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        project = new Project();
+
         exportButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -140,9 +151,11 @@ public class Dashboard extends JDialog{
                 }
 
                 System.out.println("Successful for " + currUser.getName());
+
+                project.rePopulateTasks();
+
                 getExportName().setVisible(false);
                 dashboardPanel.setVisible(true);
-
             }
         });
 
@@ -150,17 +163,17 @@ public class Dashboard extends JDialog{
          * Author Ian Liston
          */
         // Creates round boarder of task bars {
-        taskOne.setBorder(new RoundedBorder(10));
-        taskTwo.setBorder(new RoundedBorder(10));
-        taskThree.setBorder(new RoundedBorder(10));
-        taskFour.setBorder(new RoundedBorder(10));
-        taskFive.setBorder(new RoundedBorder(10));
-        taskSix.setBorder(new RoundedBorder(10));
-        taskSeven.setBorder(new RoundedBorder(10));
-        taskEight.setBorder(new RoundedBorder(10));
-        taskNine.setBorder(new RoundedBorder(10));
-        taskTen.setBorder(new RoundedBorder(10));
-        taskEleven.setBorder(new RoundedBorder(10));
+        task1.setBorder(new RoundedBorder(10));
+        task2.setBorder(new RoundedBorder(10));
+        task3.setBorder(new RoundedBorder(10));
+        task4.setBorder(new RoundedBorder(10));
+        task5.setBorder(new RoundedBorder(10));
+        task6.setBorder(new RoundedBorder(10));
+        task7.setBorder(new RoundedBorder(10));
+        task8.setBorder(new RoundedBorder(10));
+        task9.setBorder(new RoundedBorder(10));
+        task10.setBorder(new RoundedBorder(10));
+        task11.setBorder(new RoundedBorder(10));
         // }
 
         /**
@@ -182,11 +195,14 @@ public class Dashboard extends JDialog{
         taskWinPlusButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Task task = new Task(toDoLWinTextField.getText(),toDoLWinDateField.getText());
-                project.addTask(task);
+                if(!taskPanelQue.isEmpty()) {
+                    Task task = new Task(toDoLWinTextField.getText(), toDoLWinDateField.getText(), taskPanelQue.remove(), taskTextQue.remove());
+                    project.addTask(task);
+                }
+                project.rePopulateTasks();
                 taskWinPanel.setVisible(false);
                 taskDropPanel.setVisible(true);
-                // Re-populate task bars here!!!!
+
             }
         });
     }
@@ -231,5 +247,31 @@ public class Dashboard extends JDialog{
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
             g.drawRoundRect(x,y,width-1,height-1,radius,radius);
         }
+    }
+
+    private void createTaskQueues(){
+        this.taskTextQue.add(task1TextPane);
+        this.taskTextQue.add(task2TextPane);
+        this.taskTextQue.add(task3TextPane);
+        this.taskTextQue.add(task4TextPane);
+        this.taskTextQue.add(task5TextPane);
+        this.taskTextQue.add(task6TextPane);
+        this.taskTextQue.add(task7TextPane);
+        this.taskTextQue.add(task8TextPane);
+        this.taskTextQue.add(task9TextPane);
+        this.taskTextQue.add(task10TextPane);
+        this.taskTextQue.add(task11TextPane);
+
+        this.taskPanelQue.add(task1);
+        this.taskPanelQue.add(task2);
+        this.taskPanelQue.add(task3);
+        this.taskPanelQue.add(task4);
+        this.taskPanelQue.add(task5);
+        this.taskPanelQue.add(task6);
+        this.taskPanelQue.add(task7);
+        this.taskPanelQue.add(task8);
+        this.taskPanelQue.add(task9);
+        this.taskPanelQue.add(task10);
+        this.taskPanelQue.add(task11);
     }
 }
